@@ -1,0 +1,5 @@
+{
+  "baseUrl": "http://localhost:10626",
+  "video": false,
+  "ignoreTestFiles": ["**/examples/*.js"]
+}
