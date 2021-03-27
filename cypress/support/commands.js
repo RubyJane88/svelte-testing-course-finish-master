@@ -11,9 +11,10 @@ Cypress.Commands.add('getCommand', (url, responseBody) => {
   });
 });
 
-Cypress.Commands.add('deleteCommand', (url) => {
+Cypress.Commands.add('deleteCommand', (url, responseBody, index) => {
   cy.intercept('DELETE', url, {
-    statusCode: 204,
+    statusCode: 200,
+    body: responseBody.splice(index, 1),
   });
 });
 

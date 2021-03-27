@@ -17,8 +17,7 @@ const VILLAINS = [
 
 describe('Villains Page', () => {
   beforeEach(() => {
-    cy.getCommand('/villains', VILLAINS);
-    cy.deleteCommand('/villains/*');
+    cy.getCommand('/api/villains', VILLAINS);
     cy.visit('/');
     cy.get('[data-testid=nav-villains]').click();
   });
@@ -45,13 +44,16 @@ describe('Villains Page', () => {
     );
   });
 
-  it.skip('should delete a villain when clicked yes', () => {
+  it('should delete a villain when clicked yes', () => {
     const index = 1;
+    cy.deleteCommand('api/villains/*', VILLAINS, index);
 
     cy.get('[data-testid=button]')
       .filter(':contains("Delete")')
       .eq(index)
       .click();
+
+    cy.get('[data-testid=yes-button]').click();
 
     cy.get('[data-testid=villains-card]').should(
       'have.length',

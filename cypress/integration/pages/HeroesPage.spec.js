@@ -15,8 +15,7 @@ const HEROES = [
 
 describe('Heroes Page', () => {
   beforeEach(() => {
-    cy.getCommand('/heroes', HEROES);
-    cy.deleteCommand('/heroes/*');
+    cy.getCommand('/api/heroes', HEROES);
     cy.visit('/');
   });
 
@@ -39,7 +38,19 @@ describe('Heroes Page', () => {
     cy.get('[data-testid=card]').should('have.length', HEROES.length);
   });
 
-  it('should delete a hero when click yes', () => {});
+  it('should delete a hero when click yes', () => {
+    const index = 1;
+    cy.deleteCommand('/api/heroes/*', HEROES, index);
+
+    cy.get('[data-testid=button]')
+      .filter(':contains("Delete")')
+      .eq(index)
+      .click();
+
+    cy.get('[data-testid=yes-button]').click();
+
+    cy.get('[data-testid=card]').should('have.length', HEROES.length - 1);
+  });
 
   it('should not add a new hero when cancelled', () => {
     cy.get('[data-testid=plus-button]').click();
